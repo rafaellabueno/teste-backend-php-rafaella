@@ -1,119 +1,66 @@
-# Teste Técnico – Desenvolvedor PHP Laravel
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-## Objetivo
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-Desenvolver uma aplicação backend responsável pelo processamento, transformação e sincronização de dados de produtos e preços, utilizando Views SQL para padronização das informações e disponibilizando os dados por meio de uma API REST.
+## About Laravel
 
----
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-## Requisitos Técnicos
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Tecnologias obrigatórias:
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-* PHP 8.0+
-* Laravel 11.0+
-* SQLite
-* Docker
-* Docker Compose
+## Learning Laravel
 
----
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-## Restrições Obrigatórias
+You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-O projeto deve:
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-* Rodar integralmente via Docker.
-* Possuir arquivo `docker-compose.yml`.
-* Expor exclusivamente endpoints de API REST.
-* Conter testes automatizados.
-* Incluir instruções de execução no `README.md`.
-* Documentar os endpoints disponíveis.
+## Laravel Sponsors
 
-O projeto não deve:
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-* Exigir instalação de dependências na máquina host além do Docker.
-* Conter qualquer tipo de interface web.
+### Premium Partners
 
----
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[WebReinvent](https://webreinvent.com/)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+- **[Cyber-Duck](https://cyber-duck.co.uk)**
+- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+- **[Jump24](https://jump24.co.uk)**
+- **[Redberry](https://redberry.international/laravel/)**
+- **[Active Logic](https://activelogic.com)**
+- **[byte5](https://byte5.de)**
+- **[OP.GG](https://op.gg)**
 
-## Modelagem de Banco de Dados
+## Contributing
 
-### Tabelas de Origem
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-Devem ser criadas duas tabelas base:
+## Code of Conduct
 
-* `produtos_base`
-* `precos_base`
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-O script de criação das tabelas base encontra-se na raiz do projeto.
+## Security Vulnerabilities
 
-### Tabelas de Destino
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-Devem ser criadas duas tabelas para armazenamento dos dados processados:
+## License
 
-* `produto_insercao`
-* `preco_insercao`
-
-Considere modelagem adequada, chaves e índices quando necessário.
-
----
-
-## Processamento com Views SQL
-
-A transformação dos dados deve ser realizada obrigatoriamente por meio de Views SQL.
-
-Devem ser criadas:
-
-* Uma View para produtos.
-* Uma View para preços.
-
-As Views devem contemplar:
-
-* Normalização dos dados.
-* Processamento apenas de registros ativos.
-
----
-
-## Processo de Sincronização
-
-A sincronização deve:
-
-* Consumir os dados a partir das Views.
-* Inserir, atualizar ou remover registros nas tabelas de destino.
-* Evitar duplicidade.
-* Evitar operações desnecessárias.
-
----
-
-## API REST
-
-A aplicação deve disponibilizar os seguintes endpoints:
-
-### Sincronizar Produtos
-
-POST /api/sincronizar/produtos
-
-Executa o processo de transformação e sincronização dos dados de `produtos_base` para `produto_insercao`.
-
----
-
-### Sincronizar Preços
-
-POST /api/sincronizar/precos
-
-Executa o processo de transformação e sincronização dos dados de `precos_base` para `preco_insercao`.
-
----
-
-### Listar Produtos Sincronizados (Paginado)
-
-GET /api/produtos-precos
-
-Deve retornar os produtos processados com seus respectivos preços de forma paginada.
-A paginação deve aceitar parâmetros de controle via query string.
-
----
-
-## Como executar o projeto?
-
-{Esta seção deve ser preenchida pelo candidato com as instruções necessárias para execução da aplicação.}
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
