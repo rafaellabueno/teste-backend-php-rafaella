@@ -128,19 +128,19 @@ cd teste-backend-php-rafaella
 **2. Subir os containers**
 
 ```bash
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 **3. (Opcional) Popular dados de exemplo**
 
 ```bash
-docker-compose exec app php artisan db:seed
+docker compose exec app php artisan db:seed
 ```
 
 **4. Executar os testes**
 
 ```bash
-docker-compose exec app php artisan test
+docker compose exec app php artisan test
 ```
 
 ## 📖 Documentação da API
