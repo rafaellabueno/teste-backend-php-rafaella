@@ -121,7 +121,7 @@ Certifique-se de ter Docker e Docker Compose instalados.
 **1. Clonar o repositório**
 
 ```bash
-git clone git@github.com:rafaellabueno/teste-backend-php-rafaella.git
+git clone https://github.com/rafaellabueno/teste-backend-php-rafaella.git
 cd teste-backend-php-rafaella
 ```
 
