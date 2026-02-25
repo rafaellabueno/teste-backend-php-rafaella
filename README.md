@@ -145,6 +145,12 @@ docker compose exec app php artisan test
 
 ## 📖 Documentação da API
 
+Não esqueça de ter populado os dados de exemplo antes de executar os testes.
+
+```bash
+docker compose exec app php artisan db:seed
+```
+
 ### 🔹 Sincronizar Produtos
 
 Processa os dados da tabela `produtos_base` por meio da View SQL normalizada e popula a tabela `produto_insercao`.
