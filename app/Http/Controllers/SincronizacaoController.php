@@ -18,18 +18,38 @@ class SincronizacaoController extends Controller
         DB::beginTransaction();
         try {
             $produtosView = ViewProduto::all();
-
-            ProdutoInsercao::query()->delete();
+            
+            $codigosProcessados = [];
+            $inseridos = 0;
+            $atualizados = 0;
 
             foreach ($produtosView as $produto) {
-                ProdutoInsercao::create($produto->toArray());
+                $codigosProcessados[] = $produto->codigo;
+                
+                $atualizado = ProdutoInsercao::where('codigo', $produto->codigo)
+                    ->update($produto->toArray());
+
+                if ($atualizado) {
+                    $atualizados++;
+                } else {
+                    ProdutoInsercao::create($produto->toArray());
+                    $inseridos++;
+                }
             }
+
+            $removidos = ProdutoInsercao::whereNotIn('codigo', $codigosProcessados)->delete();
 
             DB::commit();
 
             return response()->json([
                 'status' => 'success',
                 'message' => 'Sincronização de produtos concluída com sucesso.',
+                'operacoes' => [
+                    'inseridos' => $inseridos,
+                    'atualizados' => $atualizados,
+                    'removidos' => $removidos,
+                    'total_processados' => count($codigosProcessados)
+                ]
             ], 200);
 
         } catch (Exception $e) {
@@ -49,22 +69,44 @@ class SincronizacaoController extends Controller
         DB::beginTransaction();
         try {
             $precosView = ViewPreco::all();
-
-            PrecoInsercao::query()->delete();
+            
+            $codigosProcessados = [];
+            $inseridos = 0;
+            $atualizados = 0;
 
             foreach ($precosView as $preco) {
                 $produtoExiste = ProdutoInsercao::where('codigo', $preco->codigo_produto)->exists();
                 
-                if ($produtoExiste) {
+                if (!$produtoExiste) {
+                    continue;
+                }
+
+                $codigosProcessados[] = $preco->codigo_produto;
+                
+                $atualizado = PrecoInsercao::where('codigo_produto', $preco->codigo_produto)
+                    ->update($preco->toArray());
+
+                if ($atualizado) {
+                    $atualizados++;
+                } else {
                     PrecoInsercao::create($preco->toArray());
+                    $inseridos++;
                 }
             }
+
+            $removidos = PrecoInsercao::whereNotIn('codigo_produto', $codigosProcessados)->delete();
 
             DB::commit();
 
             return response()->json([
                 'status' => 'success',
                 'message' => 'Sincronização de preços concluída com sucesso.',
+                'operacoes' => [
+                    'inseridos' => $inseridos,
+                    'atualizados' => $atualizados,
+                    'removidos' => $removidos,
+                    'total_processados' => count($codigosProcessados)
+                ]
             ], 200);
 
         } catch (Exception $e) {
